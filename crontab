@@ -1,0 +1,2 @@
+# m h dom mon dow user    command
+0 8 * * * root /usr/local/bin/python /app/main.py
