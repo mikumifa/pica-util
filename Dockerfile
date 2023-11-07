@@ -6,7 +6,8 @@ WORKDIR /app
 
 # 复制你的 Python 文件到镜像中
 COPY . /app/
-
+# ENV http_proxy http://127.0.0.1:7890
+# ENV https_proxy http://127.0.0.1:7890
 
 RUN pip install -r requirements.txt
 
