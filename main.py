@@ -1,30 +1,18 @@
-import json
-
+from db import get_all_users
 from loginIn import login_request
 from punchIn import punch_in
 
-
-def read_config(filename):
-    try:
-        with open(filename, "r") as file:
-            config_data = json.load(file)
-            return config_data
-    except FileNotFoundError:
-        print(f"Config file '{filename}' not found.")
-        return None
-
-
 if __name__ == "__main__":
-    config = read_config("config.json")
-    if config:
-        for user_config in config:
-            username = user_config.get("username")
-            password = user_config.get("password")
-
-            if username and password:
-                response = punch_in(session=login_request(username, password))
-                print(f"Username: {username}, Response: {response.text}")
-            else:
-                print("Username or password missing in config.")
+    users = get_all_users()  # 获取数据库中的用户账号和密码
+    for user in users:
+        username = user[0]
+        password = user[1]
+        if username and password:
+            response = punch_in(session=login_request(username, password))
+            print(f"Username: {username}, Response: {response.text}")
+        else:
+            print("Username or password missing in config.")
     else:
-        print("No user configurations found in config file.")
+        print("No users found in the database.")
+else:
+    print("No user configurations found in config file.")
